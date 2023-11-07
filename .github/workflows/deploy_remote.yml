@@ -30,11 +30,12 @@ jobs:
           NGINX_KEY: ${{ secrets.CERT_PRIVATE_KEY }}
       - name: Remove old files from server
         run: |
-          ssh mg-admin@158.160.23.245 "pushd /home/mg-admin && sudo docker rm $(sudo docker ps -a -f status=exited -q) && sudo docker rmi $(sudo docker images -f 'dangling=true' -q) && if [ ! -d memory-game ]; then mkdir memory-game && sudo chmod 777 memory-game && cd memory-game; else cd memory-game && sudo docker-compose down && sudo find . ! \( -path './db/db-data' \) -delete && exit; fi"
+          scp -r ./clean.sh mg-admin@158.160.23.245:./
+          ssh mg-admin@158.160.23.245 "pushd /home/mg-admin && sudo sh clean.sh && exit"
       - name: Copy files to server
         run: |
           scp -r ./* mg-admin@158.160.23.245:~/memory-game
           scp -r ./.env.sample mg-admin@158.160.23.245:~/memory-game
       - name: Restart the application
         run: |
-          ssh mg-admin@158.160.23.245 "pushd /home/mg-admin/memory-game && cp .env.sample .env && sudo docker-compose down && sudo docker-compose build && sudo docker-compose up -d && find . ! \( -path './db' \) ! \( -name 'docker-compose.yml' \) -delete && ls -a && exit"
+          ssh mg-admin@158.160.23.245 "pushd /home/mg-admin/memory-game && sudo sh deploy.sh && exit"
