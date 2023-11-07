@@ -9,4 +9,4 @@ sudo docker-compose down
 echo "Запускаем новые контейнеры..."
 sudo docker-compose up -d
 echo "Удаляем всё кроме зависимостей pg и файла docker-compose..."
-find . ! \( -path './db' \) ! \( -name 'docker-compose.yml' \) -delete
+find . ! \( -path './db' \) ! \( -name 'docker-compose.yml' \) -delete || true
