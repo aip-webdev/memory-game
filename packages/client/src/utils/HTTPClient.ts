@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 export const REDIRECT_URI =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:9000'
-    : 'https://memory-game.ru'
+    : 'https://memory-game.store'
 export const BASE_URI = `${REDIRECT_URI}/api/v2`
 
 function HTTPClient(baseUri = '') {

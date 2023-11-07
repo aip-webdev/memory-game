@@ -4,5 +4,6 @@ node_modules/
 .vscode
 dist
 /db/db-data/
-/nginx/.cache/
+/nginx/.ssl/certificate_full_chain.pem
+/nginx/.ssl/private_key.pem
 /nginx/assets/

@@ -16,29 +16,19 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.STARSHIP_PRIVATE_KEY }}
-          SSH_KNOWN_HOSTS: ${{ secrets.STARSHIP_KNOWN_HOSTS }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Create .env
         run: cp .env.sample .env
       - name: Remove old files from server
         run: |
-          ssh mg-admin@158.160.74.247 "pushd /home/mg && sudo docker-compose down && sudo find . -maxdepth 1 ! -path "./db/db-data" -delete \; && exit"
+          ssh mg-admin@158.160.23.245 "pushd /home/mg-admin && sudo docker rm $(sudo docker ps -a -f status=exited -q) && sudo docker rmi $(sudo docker images -f 'dangling=true' -q) && if [ ! -d memory-game ]; then mkdir memory-game && sudo chmod 777 memory-game && cd memory-game; else cd memory-game && sudo docker-compose down && sudo find . ! \( -path './db/db-data' \) -delete && exit; fi"
       - name: Copy files to server
         run: |
-          rsync -a --progress --human-readable --delete \
-          --exclude-from '.gitignore' \
-          --exclude .gitignore \
-          --exclude .git \
-
-          --exclude .github \
-          --exclude .env.sample \
-          --exclude .eslintignore \
-          --exclude .eslintrc.js \
-          --exclude jest.config.js \
-          --exclude *.md \
-          ./ mg-admin@158.160.74.247:/home/mg
+          scp -r ./* mg-admin@158.160.23.245:~/memory-game
+          scp -r ./.env.sample mg-admin@158.160.23.245:~/memory-game
       - name: Restart the application
         run: |
-          ssh mg-admin@158.160.74.247 "pushd /home/stovba/starship && sudo docker-compose down && sudo docker-compose build && sudo docker-compose up -d && find . -mindepth 1 ! -path "./db/db-data/*" ! -name "docker-compose.yml" -delete && ls -a"
+          ssh mg-admin@158.160.23.245 "pushd /home/mg-admin/memory-game && cp .env.sample .env && sudo docker-compose down && sudo docker-compose build && sudo docker-compose up -d && find . ! \( -path './db' \) ! \( -name 'docker-compose.yml' \) -delete && ls -a && exit"
