@@ -11,17 +11,23 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
           chmod 700 ~/.ssh
           chmod 600 ~/.ssh/id_rsa
-          echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+          echo "$SSH_HOSTS" >> ~/.ssh/known_hosts
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
       - name: Check out repository code
         uses: actions/checkout@v2
-      - name: Create .env
-        run: cp .env.sample .env
+      - name: Create certs
+        run: |
+          chmod 777 nginx/.ssl
+          echo "NGINX_CHAIN" >> ~/nginx/.ssl/certificate_full_chain.pem
+          echo "NGINX_KEY" >> ~/nginx/.ssl/private_key.pem
+        env:
+          NGINX_CHAIN: ${{ secrets.CERT_FULL_CHAIN }}
+          NGINX_KEY: ${{ secrets.CERT_PRIVATE_KEY }}
       - name: Remove old files from server
         run: |
           ssh mg-admin@158.160.23.245 "pushd /home/mg-admin && sudo docker rm $(sudo docker ps -a -f status=exited -q) && sudo docker rmi $(sudo docker images -f 'dangling=true' -q) && if [ ! -d memory-game ]; then mkdir memory-game && sudo chmod 777 memory-game && cd memory-game; else cd memory-game && sudo docker-compose down && sudo find . ! \( -path './db/db-data' \) -delete && exit; fi"
