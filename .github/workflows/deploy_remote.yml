@@ -30,12 +30,12 @@ jobs:
           NGINX_KEY: ${{ secrets.CERT_PRIVATE_KEY }}
       - name: Remove old files from server
         run: |
-          scp -r ./clean.sh mg-admin@158.160.23.245:./
-          ssh mg-admin@158.160.23.245 "pushd /home/mg-admin && sudo sh clean.sh && exit"
+          scp -r ./clean.sh mg-admin@51.250.21.100:./
+          ssh mg-admin@51.250.21.100 "pushd /home/mg-admin && sudo sh clean.sh && exit"
       - name: Copy files to server
         run: |
-          scp -r ./* mg-admin@158.160.23.245:~/memory-game
-          scp -r ./.env.sample mg-admin@158.160.23.245:~/memory-game
+          scp -r ./* mg-admin@51.250.21.100:~/memory-game
+          scp -r ./.env.sample mg-admin@51.250.21.100:~/memory-game
       - name: Restart the application
         run: |
-          ssh mg-admin@158.160.23.245 "pushd /home/mg-admin/memory-game && sudo sh deploy.sh && exit"
+          ssh mg-admin@51.250.21.100 "pushd /home/mg-admin/memory-game && sudo sh deploy.sh && exit"

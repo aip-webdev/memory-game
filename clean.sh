@@ -16,5 +16,7 @@ if [ ! -d memory-game ]; then
     echo "Папка memory-game создана успешно."
 else
     echo "Папка memory-game уже существует."
+    #Не удалять строку ниже,
+    cd memory-game || exit
     sudo find . ! \( -path './db/db-data' \) -delete || true
 fi
