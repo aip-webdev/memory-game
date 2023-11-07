@@ -4,10 +4,6 @@ echo "Удаление старых контейнеров..."
 CONTAINERS=$(sudo docker ps -a -f status=exited -q)
 echo "Containers: $CONTAINERS"
 sudo docker rm "$CONTAINERS" || true
-echo "Удаление неиспользуемых образов..."
-IMAGES=$(sudo docker images -f "dangling=true" -q)
-echo "Images: $IMAGES"
-sudo docker rmi "$IMAGES" || true
 
 if [ ! -d memory-game ]; then
     echo "Папка memory-game отсутствует. Создание новой папки..."
