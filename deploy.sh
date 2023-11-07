@@ -17,5 +17,5 @@ sudo docker compose up -d pg-14
 sudo docker compose exec pg-14 sh -c 'exec psql -U postgres memorybase < db/db-backups/dump.sql'
 echo "Запускаем новые контейнеры..."
 sudo docker compose up -d
-echo "Удаляем всё кроме зависимостей pg и файла docker-compose..."
+echo "Удаляем всё кроме зависимостей pg и файлов .env и docker-compose..."
 find . ! \( -path './db' \) ! \( -name 'docker-compose.yml' \) ! \( -name '.env' \) -delete || true
