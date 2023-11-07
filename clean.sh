@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-echo "Удаление старых контейнеров..."
-CONTAINERS=$(sudo docker ps -a -f status=exited -q)
-echo "Containers: $CONTAINERS"
-sudo docker rm "$CONTAINERS" || true
-
 if [ ! -d memory-game ]; then
     echo "Папка memory-game отсутствует. Создание новой папки..."
     mkdir memory-game

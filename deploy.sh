@@ -8,6 +8,11 @@ echo "Обновляем образы..."
 sudo docker-compose build
 echo "Останавливаем и удаляем контейнеры..."
 sudo docker-compose down
+echo "Удаление старых контейнеров..."
+CONTAINERS=$(sudo docker ps -a -f status=exited -q)
+echo "Containers: $CONTAINERS"
+sudo docker rm "$CONTAINERS" || true
+cd db && sudo rm -rf db-data && cd ../
 echo "Поднимаем базу и восстанавливаем..."
 sudo docker-compose up -d pg-14
 sudo docker-compose exec pg-14 sh -c 'exec psql -U postgres memorybase < db/db-backups/dump.sql'
