@@ -47,9 +47,8 @@ this.addEventListener('fetch', event => {
 })
 
 const updateCache = (req, res) => {
-  console.log(req.url)
   caches.open(CACHE_NAME).then(cache => {
-    if (req.url.startsWith('http')) {
+    if (req.url.startsWith('http') && !req.url.includes('leaderboard/all')) {
       cache.put(req, res)
     }
   })
