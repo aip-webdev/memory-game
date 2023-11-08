@@ -22,9 +22,9 @@ echo -e "${GREEN}Containers: $CONTAINERS"
 sudo docker rm "$CONTAINERS" || true
 
 echo -e "${GREEN}Восстановление БД..."
-sudo docker compose up -d pg-14
 (cp ./db/dump.sql ./db/db-backups/dump.sql && sudo rm -rf ./db/dump.sql ) || true
-
+sudo rm -rf ./db/db-data
+sudo docker compose up -d pg-14
 sudo docker compose exec pg-14 sh -c 'exec psql -U postgres memorybase < /backup/dump.sql'
 
 echo -e "${GREEN}Запуск новых контейнеров..."
