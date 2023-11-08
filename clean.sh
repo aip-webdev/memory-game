@@ -21,5 +21,5 @@ else
     #Не удалять строку ниже,
     cd memory-game || exit
     echo -e "${GREEN}Удаление старых файлов..."
-    sudo find . ! \( -path './db/db-data' \) ! \( -path '.ssh' \) -delete || true
+    sudo find . ! \( -path './db' \) ! \( -path '.ssh' \) -delete || true
 fi
