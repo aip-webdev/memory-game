@@ -67,6 +67,10 @@ async function startServer() {
     app.use('/icons', express.static(path.resolve(distPath, 'icons')))
   }
 
+  app.get('/service-worker.js', (_req, res) => {
+    res.sendFile(path.resolve(ssrClientPath, 'public', 'service-worker.js'))
+  })
+
   app.use('*', cookieParser(), async (req, res, next) => {
     try {
       const url = req.originalUrl
