@@ -34,8 +34,14 @@ jobs:
           ssh mg-admin@51.250.21.100 "pushd /home/mg-admin && sudo sh clean.sh && exit"
       - name: Copy files to server
         run: |
-          scp -r ./* mg-admin@51.250.21.100:~/memory-game
-          scp -r ./.env.sample mg-admin@51.250.21.100:~/memory-game
+          rsync -a --progress --human-readable --delete \
+          --exclude-from '.gitignore' \
+          --exclude .gitignore \
+          --exclude .git \
+          --exclude .github \
+          --exclude  db \
+          --exclude *.md \
+          ./ mg-admin@51.250.21.100:~/memory-game
       - name: Restart the application
         run: |
           ssh mg-admin@51.250.21.100 "pushd /home/mg-admin/memory-game && sudo sh deploy.sh && exit"
