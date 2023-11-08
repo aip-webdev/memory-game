@@ -64,6 +64,7 @@ async function startServer() {
 
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
+    app.use('/icons', express.static(path.resolve(distPath, 'icons')))
   }
 
   app.use('*', cookieParser(), async (req, res, next) => {
