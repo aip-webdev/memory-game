@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom'
 import { Layout } from './components/Layout/Layout'
 import { routes } from '@/config/routerConfig'
 import RequiredAuth from '@/components/RequiredAuth/RequiredAuth'
-import { REDIRECT_URI } from '@/utils/HTTPClient'
 
 const routeComponents = routes.map(route => (
   <Route
