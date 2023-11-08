@@ -1,8 +1,5 @@
 version: "3.9"
 
-volumes:
-  db-data:
-
 services:
     nginx:
       container_name: mg-nginx
