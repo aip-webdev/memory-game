@@ -33,15 +33,15 @@ services:
         ports:
             - "9000:9000"
         depends_on:
-          - pg-14
+          - pg-16
         networks:
           - common
 
-    pg-14:
+    pg-16:
       container_name: mg-pg
       env_file:
         - ./.env
-      image: postgres:14
+      image: postgres:16.0
       restart: always
       ports:
         - "5432:5432"
@@ -60,6 +60,8 @@ services:
         - "8080:8080"
       networks:
         - common
+      depends_on:
+        - pg-16
 
 networks:
   common:

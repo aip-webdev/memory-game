@@ -31,7 +31,7 @@
 ### Видео: https://youtu.be/JVSFwfT2PbE
 
 1. Установить сервисы docker
-2. Запустить сервисы adminer и pg-14
+2. Запустить сервисы adminer и pg-16
 3. Выполните команду `yarn dev:server` чтобы запустить только server
 4. Открыть приложение по адресу localhost:9000
 
@@ -124,8 +124,8 @@ docker-compose up -d some_service`
 Ввести в командной строке в корне проекта команду
 (к названию "dump.sql" дописывать дату экспорта)
 
-`docker-compose exec -T mypg-14 sh -c 'exec pg_dump -U postgres --inserts bugsbase > /db/db-backups/dump.sql'`
+`docker-compose exec -T pg-16 sh -c 'exec pg_dump -U postgres --inserts bugsbase > /db/db-backups/dump.sql'`
 
 #### Восстановить базу данных из дампа:
 
-`docker-compose exec mypg-14 sh -c 'exec psql -U postgres bugsbase < db/db-backups/dump.sql'`
+`docker-compose exec pg-16 sh -c 'exec psql -U postgres bugsbase < db/db-backups/dump.sql'`
