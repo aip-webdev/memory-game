@@ -38,6 +38,7 @@ services:
           - common
 
     pg-14:
+      container_name: mg-pg
       env_file:
         - ./.env
       image: postgres:14
@@ -52,6 +53,7 @@ services:
         - common
 
     adminer:
+      container_name: mg-adminer
       image: adminer
       restart: always
       ports:

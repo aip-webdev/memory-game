@@ -26,7 +26,7 @@ echo -e "${GREEN}Восстановление БД..."
 sudo rm -rf ./db/db-data
 sudo docker compose up -d pg-14
 sudo docker compose exec pg-14 sh -c 'exec psql -U postgres memorybase < /backup/dump.sql'
-
+wait
 echo -e "${GREEN}Запуск новых контейнеров..."
 sudo docker compose up -d
 
