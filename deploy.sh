@@ -15,7 +15,7 @@ echo -e "${GREEN}Создание файла .env..."
 cp .env.sample .env
 
 echo -e "${GREEN}Обновление образов docker..."
-sudo docker compose build server & sudo docker compose build nginx
+sudo docker compose build server & sudo docker compose build nginx || sudo docker compose up -d && sudo docker compose build server & sudo docker compose build nginx
 wait
 echo -e "${GREEN}Обновление образов docker - SUCCESS"
 
