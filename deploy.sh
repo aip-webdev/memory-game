@@ -26,7 +26,7 @@ wait
 echo -e "${GREEN}Обновление образов docker - SUCCESS"
 
 echo -e "${GREEN}Остановка и удаление контейнеров docker..."
-sudo docker compose down server & sudo docker compose down nginx
+sudo docker compose stop server & sudo docker compose stop nginx
 wait
 echo -e "${GREEN}Остановка и удаление контейнеров - SUCCESS"
 
