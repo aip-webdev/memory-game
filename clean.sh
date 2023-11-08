@@ -2,15 +2,6 @@
 
 GREEN='\033[0;32m'
 
-echo -e "${GREEN}Удаление старых контейнеров..."
-CONTAINERS=$(sudo docker ps -a -f status=exited -q)
-echo -e "${GREEN}Containers: $CONTAINERS"
-sudo docker rm "$CONTAINERS"
-echo -e "${GREEN}Удаление неиспользуемых образов..."
-IMAGES=$(sudo docker images -f "dangling=true" -q)
-echo -e "${GREEN}Images: $IMAGES"
-sudo docker rmi "$IMAGES"
-
 if [ ! -d memory-game ]; then
     echo -e "${GREEN}Папка memory-game отсутствует. Создание новой папки..."
     mkdir memory-game
@@ -21,6 +12,5 @@ else
     #Не удалять строку ниже,
     cd memory-game || exit
     echo -e "${GREEN}Удаление старых файлов..."
-    sudo chmod 777 db/db-init
     sudo find . ! \( -path './db' \) ! \( -path '.ssh' \) -delete || true
 fi
