@@ -5,8 +5,7 @@ echo -e "${GREEN}Создание файла .env..."
 cp .env.sample .env
 
 echo -e "${GREEN}Создание дампа БД..."
-echo "DATE=date -d @1267619929"
-sudo docker compose exec -T pg-14 sh -c "exec pg_dump -U postgres --inserts memorybase > db/db-backups/dump.sql"
+sudo docker compose exec -T pg-14 sh -c "exec pg_dump -U postgres --inserts memorybase > /backup/dump.sql"
 
 echo -e "${GREEN}Обновление образов docker..."
 sudo docker compose build
