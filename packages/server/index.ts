@@ -68,7 +68,7 @@ async function startServer() {
   }
 
   app.get('/service-worker.js', (_req, res) => {
-    res.sendFile(path.resolve(ssrClientPath, 'public', 'service-worker.js'))
+    res.sendFile(path.resolve(ssrClientPath, 'service-worker.js'))
   })
 
   app.use('*', cookieParser(), async (req, res, next) => {
