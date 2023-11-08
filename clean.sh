@@ -1,22 +1,25 @@
 #!/usr/bin/env bash
 
-echo "Удаление старых контейнеров..."
+GREEN='\033[0;32m'
+
+echo -e "${GREEN}Удаление старых контейнеров..."
 CONTAINERS=$(sudo docker ps -a -f status=exited -q)
-echo "Containers: $CONTAINERS"
+echo -e "${GREEN}Containers: $CONTAINERS"
 sudo docker rm "$CONTAINERS"
-echo "Удаление неиспользуемых образов..."
+echo -e "${GREEN}Удаление неиспользуемых образов..."
 IMAGES=$(sudo docker images -f "dangling=true" -q)
-echo "Images: $IMAGES"
+echo -e "${GREEN}Images: $IMAGES"
 sudo docker rmi "$IMAGES"
 
 if [ ! -d memory-game ]; then
-    echo "Папка memory-game отсутствует. Создание новой папки..."
+    echo -e "${GREEN}Папка memory-game отсутствует. Создание новой папки..."
     mkdir memory-game
     sudo chmod 777 memory-game
-    echo "Папка memory-game создана успешно."
+    echo -e "${GREEN}Папка memory-game создана успешно."
 else
-    echo "Папка memory-game уже существует."
+    echo -e "${GREEN}Папка memory-game уже существует."
     #Не удалять строку ниже,
     cd memory-game || exit
-    sudo find . ! \( -path './db/db-data' \) -delete || true
+    echo -e "${GREEN}Удаление старых файлов..."
+    sudo find . ! \( -path './db/db-data' \) ! \( -path '.ssh' \) -delete || true
 fi
