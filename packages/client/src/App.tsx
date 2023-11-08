@@ -17,7 +17,7 @@ function startServiceWorker() {
   window.addEventListener('load', () => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-        .register(`${REDIRECT_URI}/service-worker.js`)
+        .register(`${REDIRECT_URI}/assets//service-worker.js`)
         .then(registration => {
           console.log('SW registration successful: ', registration.scope)
         })
