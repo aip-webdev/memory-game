@@ -18,6 +18,7 @@ const LeaderBoard: React.FC = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
+    dispatch(getLeaderBoardResults(leaderBoardParams))
     const interval = setInterval(() => {
       dispatch(getLeaderBoardResults(leaderBoardParams))
     }, 30000)

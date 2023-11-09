@@ -29,3 +29,6 @@ sudo docker compose up -d
 
 echo -e "${GREEN}Удаление ненужных файлов..."
 delete_files_except
+sudo docker builder prune
+echo -e "${GREEN}Информация о свободном пространстве на vps..."
+df -hT /boot
