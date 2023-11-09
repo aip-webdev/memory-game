@@ -18,8 +18,14 @@ const LeaderBoard: React.FC = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(getLeaderBoardResults(leaderBoardParams))
-  }, [])
+    const interval = setInterval(() => {
+      dispatch(getLeaderBoardResults(leaderBoardParams))
+    }, 30000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [dispatch])
 
   const bestPlayers = (leaderList || []).map((leader, index) => {
     const { userData, codeHuntersMemoryGameScore } = leader

@@ -28,14 +28,8 @@ const Main = () => {
   const currentUser = useAppSelector(userSelector)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      dispatch(getLeaderBoardResults(leaderBoardParams))
-    }, 10000)
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [dispatch])
+    dispatch(getLeaderBoardResults(leaderBoardParams))
+  }, [])
 
   useEffect(() => {
     if (leaderList !== null && oldLeaderList !== null) {
