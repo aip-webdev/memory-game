@@ -13,14 +13,18 @@ const MAXAGE = 3600
 const fetchAndUpdateCache = (request) => {
   return fetch(request, { cache: 'no-store' }).then(response => {
     if (!response || response.status !== 200 || !response.url.includes('https')) {
-      return response;
+      return response
     }
-    const responseToCache = response.clone();
+    const responseToCache = response.clone()
     caches.open(CACHENAME).then(cache => {
-      if (['get', 'post', 'put'].includes(request.method.toLowerCase())) {
-        if (request.method.toLowerCase() === 'put' && !request.url.includes('user-theme')) return response
-        if (request.method.toLowerCase() === 'post' && !request.url.includes('leaderboard/all')) return response
+      if (request.method === 'GET') {
+
         cache.put(request, responseToCache)
+      } else if (['POST', 'PUT'].includes(request.method)) {
+        return (
+          !request.url.includes('leaderboard/all') ||
+          !request.url.includes('user-theme')
+        ) ? response : cache.add(request)
       }
     })
     return response
