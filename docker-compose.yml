@@ -48,6 +48,11 @@ services:
       volumes:
         - ./db/db-data:/var/lib/postgresql/data
         - ./db/db-backups:/backup
+      deploy:
+        resources:
+          limits:
+            cpus: '1'
+            memory: 1G
       networks:
         - common
 
