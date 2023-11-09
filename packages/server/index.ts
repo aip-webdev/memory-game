@@ -67,7 +67,7 @@ async function startServer() {
     app.use('/icons', express.static(path.resolve(distPath, 'icons')))
   }
 
-  app.get('/service-worker.js', (_req, res) => {
+  app.get('*/service-worker.js', (_req, res) => {
     res.sendFile(path.resolve(ssrClientPath, 'service-worker.js'))
   })
 
