@@ -12,7 +12,7 @@ const MAXAGE = 3600
 
 const fetchAndUpdateCache = (request) => {
   return fetch(request, { cache: 'no-store' }).then(response => {
-    if (!response || response.status !== 200) {
+    if (!response || response.status !== 200 || !response.url.includes('https')) {
       return response;
     }
     const responseToCache = response.clone();
