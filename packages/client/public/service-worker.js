@@ -51,8 +51,6 @@ const updateCache = (req, res) => {
     caches.open(CACHE_NAME).then(cache => {
       if (req.method === 'GET') {
         cache.put(req, res)
-      } else if (req.url.includes('leaderboard/all') || req.url.includes('user-theme')) {
-        cache.add(req)
       }
     })
   }

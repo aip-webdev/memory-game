@@ -11,6 +11,18 @@ delete_files_except() {
     done
 }
 
+echo -e "${GREEN}Удаление старых контейнеров..."
+CONTAINERS=$(sudo docker ps -a -f status=exited -q)
+echo "Containers: $CONTAINERS"
+echo -e "${GREEN}Containers: $CONTAINERS"
+sudo docker rm "$CONTAINERS" || true
+echo "Удаление неиспользуемых образов..."
+echo -e "${GREEN}Удаление неиспользуемых образов..."
+IMAGES=$(sudo docker images -f "dangling=true" -q)
+echo "Images: $IMAGES"
+echo -e "${GREEN}Images: $IMAGES"
+sudo docker rmi "$IMAGES" || true
+
 if [ ! -d memory-game ]; then
     echo -e "${GREEN}Папка memory-game отсутствует. Создание новой папки..."
     mkdir memory-game
